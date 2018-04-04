@@ -1,5 +1,6 @@
 // Vars
 var socket = io();
+var adminKey = document.getElementByID("passkey");
 var key = document.getElementById("passkey"); // Passkey input
 var user = document.getElementById("user"); // User input
 var keyPage = document.getElementById("keyPage"); // Div holding the key elements
@@ -109,6 +110,20 @@ function login() {
         keyPage.style.visibility = 'hidden';
         connect();
     }
+    if (hashCode(adminKey.value) == passwd) {
+        document.cookie='adminKey='+passwd2;
+        adminKey.value = '';
+        adminKey.disabled = true;
+        user.value = '';
+        user.disabled = true;
+        keyPage.style.visibility = 'hidden';
+        whichName = prompt("Which name would you like?")
+        if (whichName !== "Worf" && whichName !== "_System" && whichName !== "Admin")  {
+            return;
+        }
+        else  {
+            connect();
+        }
 }
 
 // Jquery
