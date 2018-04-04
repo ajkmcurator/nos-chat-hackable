@@ -61,6 +61,9 @@ function connect() {
 }
 
 function sendMsg() {
+    if (uName == '_System') {
+       uName = 'I_tried_to_hack_the_system._Sorry.'
+    }
     if (room !== undefined && m.value !== '') {
         socket.emit('message', {'room':room, 'data':[uName, m.value.substring(0, 401)]});
         m.value=''; // Reset chat bar
@@ -70,8 +73,7 @@ function sendMsg() {
 function getCookie(cname) {
     var name = cname + "=";
     var decodedCookie = decodeURIComponent(document.cookie);
-    var ca = decodedCookie.split(';');
-    for(var i = 0; i < ca.length; i++) {
+    var ca = decodedCookie.split(';');    for(var i = 0; i < ca.length; i++) {
         var c = ca[i];
         while (c.charAt(0) == ' ') {
             c = c.substring(1);
@@ -97,9 +99,6 @@ hashCode = function(str){
 function login() {
     if (hashCode(key.value) == passwd && user.value.length > 0) {
         uName = user.value.substring(0, 51);
-        if (uName == '_System') {
-            uName = 'I_tried_to_hack_the_system._Sorry.'
-        }
         document.cookie='key='+passwd;
         document.cookie='user='+uName;
         key.value = '';
